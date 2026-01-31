@@ -1,82 +1,74 @@
-import { cp, readFile, writeFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { query } from "@anthropic-ai/claude-agent-sdk";
-import { $ } from "bun";
-import { railway } from "@/lib/clients";
+import { vercel } from "@/lib/clients";
+import type { SiteFile } from "@/lib/clients/vercel";
 import {
   AgentLogger,
   ensureAgentDir,
   getPluginsForSDK,
-  getTemplatePath,
-  getWorkspacePath,
 } from "@/lib/utils";
 import type { AgentResult, WebDevContext } from "@/types";
 import { WEBDEV_SYSTEM_PROMPT } from "./prompt";
 
-function getRequiredEnv(name: string): string {
-  const value = process.env[name];
-  if (!value) {
-    throw new Error(`${name} environment variable required`);
-  }
-  return value;
-}
-
 const AGENT_TYPE = "web-dev";
 
-async function copyTemplates(
-  sitePath: string,
-  serviceName: string,
-): Promise<void> {
-  const templatePath = getTemplatePath(AGENT_TYPE);
+async function collectSiteFiles(sitePath: string): Promise<SiteFile[]> {
+  const entries = await readdir(sitePath, { recursive: true });
+  const files: SiteFile[] = [];
 
-  // Copy server.ts as-is
-  await cp(join(templatePath, "server.ts"), join(sitePath, "server.ts"));
+  for (const entry of entries) {
+    const fullPath = join(sitePath, entry);
+    const stat = await Bun.file(fullPath).exists();
+    if (!stat) continue;
 
-  // Copy package.json with service name substitution
-  const pkgTemplate = await readFile(
-    join(templatePath, "package.json"),
-    "utf-8",
-  );
-  const pkgContent = pkgTemplate.replace("{{SERVICE_NAME}}", serviceName);
-  await writeFile(join(sitePath, "package.json"), pkgContent);
+    const file = Bun.file(fullPath);
+    if ((await file.size) === 0) continue;
+
+    // Skip directories by checking if it's a file
+    try {
+      const content = await readFile(fullPath, "utf-8");
+      files.push({ file: entry, data: content, encoding: "utf-8" });
+    } catch {
+      // Binary file — base64 encode
+      const buffer = await readFile(fullPath);
+      files.push({
+        file: entry,
+        data: buffer.toString("base64"),
+        encoding: "base64",
+      });
+    }
+  }
+
+  return files;
 }
 
 async function deploy(
   serviceName: string,
-  batchId: string,
-  agentId: string,
+  sitePath: string,
   logger: AgentLogger,
 ): Promise<string> {
-  const projectId = getRequiredEnv("RAILWAY_PROJECT_ID");
-  const environmentId = getRequiredEnv("RAILWAY_ENVIRONMENT_ID");
-  const githubRepo = getRequiredEnv("GITHUB_REPO"); // e.g., username/webdev-sites
-
-  const workspacePath = getWorkspacePath(AGENT_TYPE);
-  const rootDirectory = `batches/${batchId}/${agentId}/site`;
+  const vercelDomain = process.env.VERCEL_DOMAIN;
 
   await logger.log(`Deploying service: ${serviceName}`);
 
-  // Commit and push to GitHub
-  await logger.log("Pushing to GitHub");
-  await $`git -C ${workspacePath} add -A`.quiet();
-  await $`git -C ${workspacePath} commit -m ${`Add ${serviceName}`}`.quiet();
-  await $`git -C ${workspacePath} push`.quiet();
+  // Collect all site files
+  const files = await collectSiteFiles(sitePath);
+  await logger.log(`Collected ${files.length} files for deployment`);
 
-  // Create service with repo via API
-  const serviceId = await railway.createService(
-    projectId,
-    serviceName,
-    githubRepo,
-  );
-  await logger.log(`Service created: ${serviceId}`);
+  // Deploy to Vercel (auto-creates project)
+  const url = await vercel.deploy(serviceName, files);
+  await logger.log(`Deployed: ${url}`);
 
-  // Configure rootDirectory and trigger deploy
-  await railway.configureService(environmentId, serviceId, rootDirectory);
-  await logger.log(`Configured rootDirectory: ${rootDirectory}`);
-
-  // Create domain via API
-  const url = await railway.createDomain(serviceId, environmentId);
-  await logger.log(`Domain created: ${url}`);
+  // Add custom subdomain if domain is configured
+  if (vercelDomain) {
+    const subdomain = serviceName;
+    const customDomain = `${subdomain}.${vercelDomain}`;
+    const domainResult = await vercel.addDomain(serviceName, customDomain);
+    await logger.log(
+      `Domain added: ${customDomain} (verified: ${domainResult.verified})`,
+    );
+  }
 
   return url;
 }
@@ -89,7 +81,6 @@ export async function run(context: WebDevContext): Promise<AgentResult> {
   await logger.init();
 
   const serviceName = `${companySlug}-${agentId}`;
-  await copyTemplates(sitePath, serviceName);
 
   await logger.log(`Starting web-dev agent for: ${business.name}`);
   await logger.log(`Batch: ${batchId} | Agent: ${agentId}`);
@@ -166,8 +157,8 @@ ${businessContext}`;
       }
     }
 
-    // Phase 2: Runner deploys the site
-    const deployedUrl = await deploy(serviceName, batchId, agentId, logger);
+    // Phase 2: Deploy to Vercel
+    const deployedUrl = await deploy(serviceName, sitePath, logger);
 
     return {
       success: true,

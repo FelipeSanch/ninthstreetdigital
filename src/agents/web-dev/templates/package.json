@@ -1,8 +1,0 @@
-{
-  "name": "{{SERVICE_NAME}}",
-  "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "start": "bun server.ts"
-  }
-}
