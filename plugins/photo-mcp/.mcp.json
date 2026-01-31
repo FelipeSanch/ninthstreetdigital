@@ -1,0 +1,6 @@
+{
+  "photo-mcp": {
+    "command": "npx",
+    "args": ["photo-mcp"]
+  }
+}
