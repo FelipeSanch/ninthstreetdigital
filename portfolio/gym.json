@@ -1,0 +1,19 @@
+{
+  "name": "Iron District Fitness",
+  "description": "No-frills strength and conditioning gym with personal training, group classes, and open floor space",
+  "location": {
+    "city": "Brooklyn",
+    "state": "NY"
+  },
+  "contact": {
+    "email": "info@irondistrictfitness.com",
+    "phone": "(718) 555-0637"
+  },
+  "services": [
+    "Personal Training",
+    "Group Classes",
+    "Open Gym Access",
+    "Nutrition Coaching",
+    "Youth Programs"
+  ]
+}

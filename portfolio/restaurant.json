@@ -1,0 +1,19 @@
+{
+  "name": "Mesa Roja Kitchen",
+  "description": "Family-owned Mexican restaurant serving authentic regional dishes and craft margaritas in a warm, vibrant space",
+  "location": {
+    "city": "San Antonio",
+    "state": "TX"
+  },
+  "contact": {
+    "email": "hello@mesarojakitchen.com",
+    "phone": "(210) 555-0463"
+  },
+  "services": [
+    "Dine-In",
+    "Takeout & Delivery",
+    "Catering",
+    "Private Events",
+    "Weekend Brunch"
+  ]
+}

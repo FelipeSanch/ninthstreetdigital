@@ -1,29 +1,5 @@
-const placeholders = [
-  {
-    gradient: "linear-gradient(135deg, #FADDD3 0%, #F0EBE3 60%, #E8EDE4 100%)",
-    label: "Restaurant Website",
-  },
-  {
-    gradient: "linear-gradient(150deg, #E8EDE4 0%, #D4DDD0 50%, #F0EBE3 100%)",
-    label: "Flower Shop",
-  },
-  {
-    gradient: "linear-gradient(135deg, #F0EBE3 0%, #E4DDD4 60%, #FADDD3 100%)",
-    label: "Plumbing Services",
-  },
-  {
-    gradient: "linear-gradient(160deg, #E4DDD4 0%, #F0EBE3 40%, #E8EDE4 100%)",
-    label: "Bakery & Cafe",
-  },
-  {
-    gradient: "linear-gradient(140deg, #FADDD3 0%, #EDE4D8 70%, #E4DDD4 100%)",
-    label: "Fitness Studio",
-  },
-  {
-    gradient: "linear-gradient(135deg, #E8EDE4 0%, #F0EBE3 50%, #FADDD3 100%)",
-    label: "Home Services",
-  },
-];
+import { projects } from "../data/projects";
+import { Link } from "../router";
 
 export function Portfolio() {
   return (
@@ -36,61 +12,78 @@ export function Portfolio() {
             Our work
           </h2>
           <p className="mt-4 text-muted text-lg leading-relaxed">
-            We're building our portfolio right now. New projects are in the
-            works — check back soon to see what we've been up to.
+            Real sites we've built for small businesses. Each one designed to
+            convert visitors into customers.
           </p>
         </div>
 
-        {/* Placeholder grid */}
+        {/* Project grid */}
         <div className="mt-14 md:mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-          {placeholders.map((item, i) => (
-            <div
-              key={item.label}
+          {projects.map((project, i) => (
+            <Link
+              key={project.slug}
+              to={`/project/${project.slug}`}
               className="reveal group relative aspect-[4/3] rounded-2xl overflow-hidden border border-sand/40"
               style={{ transitionDelay: `${i * 80}ms` }}
             >
-              {/* Gradient background */}
+              {/* Background */}
               <div
-                className="absolute inset-0"
-                style={{ background: item.gradient }}
+                className="absolute inset-0 opacity-10 group-hover:opacity-15 transition-opacity duration-300"
+                style={{ backgroundColor: project.color }}
               />
 
-              {/* Content overlay */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
-                {/* Abstract shape */}
-                <div className="mb-4 opacity-20">
+              {/* Content */}
+              <div className="absolute inset-0 flex flex-col justify-end p-6">
+                <span
+                  className="text-xs font-medium tracking-wide uppercase mb-1"
+                  style={{ color: project.color }}
+                >
+                  {project.type}
+                </span>
+                <span className="text-ink text-lg font-semibold font-display">
+                  {project.name}
+                </span>
+                <span className="text-muted text-sm mt-0.5">
+                  {project.location}
+                </span>
+
+                {/* Arrow */}
+                <div className="absolute top-5 right-5 w-8 h-8 rounded-full border border-sand/60 flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
                   <svg
-                    width="48"
-                    height="48"
-                    viewBox="0 0 48 48"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
                     fill="none"
                     aria-hidden="true"
                   >
-                    <rect
-                      x="4"
-                      y="4"
-                      width="40"
-                      height="40"
-                      rx="6"
+                    <path
+                      d="M3 11L11 3M11 3H5M11 3V9"
                       stroke="#1F1D1A"
                       strokeWidth="1.5"
-                      strokeDasharray="4 3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </svg>
                 </div>
-
-                <span className="text-ink/50 text-sm font-medium tracking-wide uppercase">
-                  Coming Soon
-                </span>
-                <span className="text-ink/30 text-xs mt-1.5">
-                  {item.label}
-                </span>
               </div>
 
-              {/* Hover state */}
-              <div className="absolute inset-0 bg-ink/[0.02] group-hover:bg-ink/[0.05] transition-colors duration-300" />
-            </div>
+              {/* Hover overlay */}
+              <div className="absolute inset-0 bg-ink/[0.02] group-hover:bg-ink/[0.04] transition-colors duration-300" />
+            </Link>
           ))}
+        </div>
+
+        {/* View all link */}
+        <div className="mt-10 text-center">
+          <Link
+            to="/portfolio"
+            className="inline-flex items-center gap-2 text-sm font-medium text-ink hover:text-accent transition-colors"
+          >
+            View all projects
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 7H11M11 7L7 3M11 7L7 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </Link>
         </div>
       </div>
     </section>

@@ -3,6 +3,8 @@ import { useEffect } from "react";
 
 import "./styles/output.css";
 
+import { useRoute } from "./router";
+
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { Services } from "./components/Services";
@@ -13,28 +15,10 @@ import { CallToAction } from "./components/CallToAction";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 
-function App() {
-  // Initialize scroll reveal observer
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("revealed");
-            observer.unobserve(entry.target);
-          }
-        }
-      },
-      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
-    );
+import { PortfolioPage } from "./pages/PortfolioPage";
+import { ProjectPage } from "./pages/ProjectPage";
 
-    // Observe all reveal elements
-    const elements = document.querySelectorAll(".reveal");
-    elements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
-
+function HomePage() {
   return (
     <>
       <Navbar />
@@ -50,6 +34,41 @@ function App() {
       <Footer />
     </>
   );
+}
+
+function App() {
+  const path = useRoute();
+
+  // Initialize scroll reveal observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    const elements = document.querySelectorAll(".reveal");
+    elements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, [path]);
+
+  if (path === "/portfolio") {
+    return <PortfolioPage />;
+  }
+
+  if (path.startsWith("/project/")) {
+    const slug = path.replace("/project/", "");
+    return <ProjectPage slug={slug} />;
+  }
+
+  return <HomePage />;
 }
 
 const container = document.getElementById("root");

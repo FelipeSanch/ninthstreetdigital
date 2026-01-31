@@ -1,0 +1,19 @@
+{
+  "name": "Bright Smile Dental",
+  "description": "Modern family dentistry with gentle care, cosmetic services, and same-day emergency appointments",
+  "location": {
+    "city": "Denver",
+    "state": "CO"
+  },
+  "contact": {
+    "email": "appointments@brightsmiledental.com",
+    "phone": "(720) 555-0518"
+  },
+  "services": [
+    "General Dentistry",
+    "Teeth Whitening",
+    "Invisalign",
+    "Dental Implants",
+    "Emergency Care"
+  ]
+}

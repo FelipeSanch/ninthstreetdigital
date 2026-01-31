@@ -80,7 +80,7 @@ export async function run(context: WebDevContext): Promise<AgentResult> {
   const logger = new AgentLogger(AGENT_TYPE, batchId, agentId);
   await logger.init();
 
-  const serviceName = `${companySlug}-${agentId}`;
+  const serviceName = companySlug;
 
   await logger.log(`Starting web-dev agent for: ${business.name}`);
   await logger.log(`Batch: ${batchId} | Agent: ${agentId}`);
