@@ -1,9 +1,9 @@
 import index from "./index.html";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const NOTIFY_EMAIL = "jose@ninthstreetdigital.com";
-const TELEGRAM_BOT_TOKEN = "8106260730:AAH00Qay0bgk50EI7tgLglFJQdEY2d38QAU";
-const TELEGRAM_CHAT_ID = "7462396310";
+const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || "jose@ninthstreetdigital.com";
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || "";
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || "";
 
 async function sendTelegram(text: string) {
   await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
@@ -61,7 +61,7 @@ async function sendContactEmail(name: string, email: string, message: string) {
 
 Bun.serve({
   hostname: "0.0.0.0",
-  port: 3000,
+  port: parseInt(process.env.PORT || "3000"),
   routes: {
     "/": index,
     "/api/webhook/email": {
@@ -121,10 +121,6 @@ Bun.serve({
         }
       },
     },
-  },
-  development: {
-    hmr: true,
-    console: true,
   },
 });
 

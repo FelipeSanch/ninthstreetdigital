@@ -6,7 +6,9 @@
   "scripts": {
     "css": "bunx @tailwindcss/cli -i ./src/styles/main.css -o ./src/styles/output.css --watch",
     "css:build": "bunx @tailwindcss/cli -i ./src/styles/main.css -o ./src/styles/output.css --minify",
-    "dev": "bun run css & bun --hot server.ts"
+    "dev": "bun run css & bun --hot server.ts",
+    "build": "bun run css:build",
+    "start": "bun run server.ts"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.18",
