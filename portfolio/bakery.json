@@ -1,0 +1,19 @@
+{
+  "name": "Golden Crust Bakery",
+  "description": "Artisan breads, pastries, and custom cakes made fresh daily in a cozy neighborhood bakery",
+  "location": {
+    "city": "Portland",
+    "state": "OR"
+  },
+  "contact": {
+    "email": "hello@goldencrustbakery.com",
+    "phone": "(503) 555-0182"
+  },
+  "services": [
+    "Fresh Bread Daily",
+    "Custom Cakes",
+    "Pastries & Croissants",
+    "Catering",
+    "Wedding Cakes"
+  ]
+}

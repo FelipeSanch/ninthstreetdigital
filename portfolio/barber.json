@@ -1,0 +1,19 @@
+{
+  "name": "Southside Barber Co.",
+  "description": "Classic cuts and modern styles in a laid-back shop. Walk-ins welcome, appointments preferred",
+  "location": {
+    "city": "Chicago",
+    "state": "IL"
+  },
+  "contact": {
+    "email": "book@southsidebarberco.com",
+    "phone": "(312) 555-0294"
+  },
+  "services": [
+    "Haircuts",
+    "Beard Trims",
+    "Hot Towel Shaves",
+    "Kids Cuts",
+    "Hair Color"
+  ]
+}

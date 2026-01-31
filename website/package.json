@@ -1,0 +1,22 @@
+{
+  "name": "nsd-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "css": "bunx @tailwindcss/cli -i ./src/styles/main.css -o ./src/styles/output.css --watch",
+    "css:build": "bunx @tailwindcss/cli -i ./src/styles/main.css -o ./src/styles/output.css --minify",
+    "dev": "bun run css & bun --hot server.ts"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.18",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwindcss": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@types/bun": "latest"
+  }
+}

@@ -43,4 +43,4 @@ workspaces/
 *.db-shm
 
 # Data
-data/
+data/.env

@@ -1,0 +1,19 @@
+{
+  "name": "Verde Lawn & Garden",
+  "description": "Full-service landscaping and lawn care for residential and commercial properties",
+  "location": {
+    "city": "Austin",
+    "state": "TX"
+  },
+  "contact": {
+    "email": "info@verdelawnandgarden.com",
+    "phone": "(512) 555-0371"
+  },
+  "services": [
+    "Lawn Maintenance",
+    "Landscape Design",
+    "Tree Trimming",
+    "Irrigation Systems",
+    "Seasonal Cleanups"
+  ]
+}
