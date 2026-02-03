@@ -250,7 +250,7 @@ async function main() {
     const resendId = await sendEmail(email, subject, html, scheduledAt);
 
     if (resendId) {
-      insertOutreach.run(lead.id, email, subject, lead.draft_url, "scheduled", resendId);
+      insertOutreach.run(lead.id, email, subject, lead.draft_url, "sent", resendId);
       sent++;
       console.log(`    ✓ Scheduled (${resendId}) → ${scheduleDisplay} ET`);
     } else {
