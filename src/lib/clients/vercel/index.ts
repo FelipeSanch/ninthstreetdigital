@@ -97,3 +97,48 @@ export async function createDnsRecord(
 
   return result.uid;
 }
+
+/**
+ * Get all webhooks for the account/team.
+ */
+export async function getWebhooks() {
+  const client = getClient();
+  return client.webhooks.getWebhooks({
+    teamId: getTeamId(),
+  });
+}
+
+/**
+ * Create a webhook for deployment events.
+ * Returns the webhook ID and secret for signature verification.
+ */
+export async function createWebhook(
+  url: string,
+  events: string[] = ["deployment.ready", "deployment.error"],
+): Promise<{ id: string; secret: string }> {
+  const client = getClient();
+
+  const result = await client.webhooks.createWebhook({
+    teamId: getTeamId(),
+    requestBody: {
+      url,
+      events: events as any,
+    },
+  });
+
+  return {
+    id: result.id,
+    secret: result.secret,
+  };
+}
+
+/**
+ * Delete a webhook by ID.
+ */
+export async function deleteWebhook(id: string): Promise<void> {
+  const client = getClient();
+  await client.webhooks.deleteWebhook({
+    id,
+    teamId: getTeamId(),
+  });
+}

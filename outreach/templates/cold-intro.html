@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Preview</title>
+  <!--[if mso]><noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript><![endif]-->
+  <style>
+    body { margin: 0; padding: 0; background-color: #FAF8F5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .wrapper { max-width: 600px; margin: 0 auto; padding: 40px 20px; }
+    .content { background: #FFFFFF; border-radius: 12px; padding: 40px 36px; border: 1px solid #E8E4DF; }
+    .logo { font-size: 15px; font-weight: 600; color: #1A1A1A; letter-spacing: -0.3px; margin-bottom: 32px; }
+    .logo span { color: #C44D2A; }
+    h1 { font-size: 22px; font-weight: 600; color: #1A1A1A; line-height: 1.35; margin: 0 0 16px 0; }
+    p { font-size: 15px; color: #4A4A4A; line-height: 1.65; margin: 0 0 16px 0; }
+    .highlight { background: #FDF6F3; border-left: 3px solid #C44D2A; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 24px 0; }
+    .highlight p { margin: 0; font-size: 14px; color: #333; }
+    .cta { display: inline-block; background: #C44D2A; color: #FFFFFF !important; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-size: 14px; font-weight: 600; margin: 8px 0 24px 0; }
+    .footer { margin-top: 32px; padding-top: 24px; border-top: 1px solid #E8E4DF; }
+    .footer p { font-size: 13px; color: #999; line-height: 1.5; }
+    .footer a { color: #C44D2A; text-decoration: none; }
+    .unsub { font-size: 11px; color: #BBB; margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="content">
+      <div class="logo">Ninth Street <span>Digital</span></div>
+
+      <h1>Hi {{OWNER_NAME}}, I built something for {{BUSINESS_NAME}}</h1>
+
+      <p>I came across {{BUSINESS_NAME}} and thought your business deserved a website that matches the quality of what you do.</p>
+
+      <p>So I went ahead and put together a free draft — a custom landing page designed specifically for {{BUSINESS_NAME}}. No templates, no generic layouts. Just something built around your business.</p>
+
+      <div class="highlight">
+        <p><strong>Your free draft is ready:</strong> <a href="{{DRAFT_URL}}" style="color: #C44D2A;">View your custom page</a></p>
+      </div>
+
+      <p>Here's what I noticed about your current site:</p>
+      <p style="font-size: 14px; color: #666;">{{AUDIT_NOTES}}</p>
+
+      <p>If you like what you see, I'd love to talk about getting it live for you. If not, no worries at all — the draft is yours to keep either way.</p>
+
+      <a href="mailto:jose@ninthstreetdigital.com?subject=Re: {{BUSINESS_NAME}} Website" class="cta">Let's talk</a>
+
+      <p>Best,<br><strong>Jose Maldonado</strong><br>Ninth Street Digital</p>
+
+      <div class="footer">
+        <p><a href="https://ninthstreetdigital.com">ninthstreetdigital.com</a></p>
+        <p class="unsub">You're receiving this because I thought {{BUSINESS_NAME}} could benefit from a better web presence. If I'm wrong, just ignore this — I won't follow up unless you reply.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -18,6 +18,8 @@ export const BusinessInputSchema = z.object({
   }),
   services: z.array(z.string()).optional(),
   existingWebsiteUrl: z.string().url().optional(),
+  category: z.string().optional(), // Business type for reference site lookup
+  primaryType: z.string().optional(), // Alternative field name from Google Places
 });
 
 export type BusinessInput = z.infer<typeof BusinessInputSchema>;
@@ -30,6 +32,7 @@ export interface AgentResult {
   batchId: string;
   agentId: string;
   error?: string;
+  correctedEmail?: string;
 }
 
 // Web-dev specific types

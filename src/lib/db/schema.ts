@@ -102,6 +102,32 @@ export const siteAudits = sqliteTable("site_audits", {
   ),
 });
 
+export const drafts = sqliteTable("drafts", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  placeId: text("place_id").references(() => places.id),
+  batchId: text("batch_id").notNull(),
+  agentId: text("agent_id").notNull(),
+  vercelUrl: text("vercel_url").notNull(),
+  customDomain: text("custom_domain"),
+  status: text("status").default("deployed"), // deployed | failed | archived
+  createdAt: integer("created_at", { mode: "timestamp" }).default(
+    sql`(unixepoch())`,
+  ),
+});
+
+export const outreach = sqliteTable("outreach", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  placeId: text("place_id").references(() => places.id),
+  type: text("type").notNull().default("email"),
+  toEmail: text("to_email"),
+  subject: text("subject"),
+  template: text("template"),
+  draftUrl: text("draft_url"),
+  status: text("status").default("pending"),
+  resendId: text("resend_id"),
+  createdAt: integer("created_at").default(sql`(unixepoch())`),
+});
+
 // Types
 export type Place = typeof places.$inferSelect;
 export type NewPlace = typeof places.$inferInsert;
@@ -109,3 +135,7 @@ export type PlaceSearch = typeof placeSearches.$inferSelect;
 export type NewPlaceSearch = typeof placeSearches.$inferInsert;
 export type SiteAudit = typeof siteAudits.$inferSelect;
 export type NewSiteAudit = typeof siteAudits.$inferInsert;
+export type Draft = typeof drafts.$inferSelect;
+export type NewDraft = typeof drafts.$inferInsert;
+export type Outreach = typeof outreach.$inferSelect;
+export type NewOutreach = typeof outreach.$inferInsert;

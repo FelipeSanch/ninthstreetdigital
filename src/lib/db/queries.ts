@@ -217,6 +217,33 @@ export async function getAllPlaces(options?: {
 }
 
 // ============================================
+// Draft operations
+// ============================================
+
+export async function insertDraft(draft: schema.NewDraft) {
+  const result = await db
+    .insert(schema.drafts)
+    .values(draft)
+    .returning();
+  return result[0];
+}
+
+export async function getDraftByPlaceId(placeId: string) {
+  return db.query.drafts.findFirst({
+    where: eq(schema.drafts.placeId, placeId),
+    orderBy: desc(schema.drafts.createdAt),
+  });
+}
+
+export async function getDraftsForBatch(batchId: string) {
+  return db
+    .select()
+    .from(schema.drafts)
+    .where(eq(schema.drafts.batchId, batchId))
+    .orderBy(desc(schema.drafts.createdAt));
+}
+
+// ============================================
 // Stats
 // ============================================
 
