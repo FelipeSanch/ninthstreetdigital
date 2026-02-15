@@ -10,8 +10,8 @@ import { join } from "node:path";
 const DB_PATH = join(import.meta.dir, "..", "leads.db");
 const TEMPLATE_PATH = join(import.meta.dir, "templates", "cold-intro.html");
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const FROM_EMAIL = "jose@mail.ninthstreetdigital.com";
-const FROM_NAME = "Jose from Ninth Street Digital";
+const FROM_EMAIL = "felipesancheznoguera6@gmail.com";
+const FROM_NAME = "Felipe from Ninth Street Digital";
 
 interface Lead {
   id: string;
@@ -172,7 +172,7 @@ async function sendEmail(to: string, subject: string, html: string, scheduledAt?
     to,
     subject,
     html,
-    reply_to: "jose@mail.ninthstreetdigital.com",
+    reply_to: "felipesancheznoguera6@gmail.com",
   };
 
   if (scheduledAt) {

@@ -1,5 +1,5 @@
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || "jose@ninthstreetdigital.com";
+const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || "felipesancheznoguera6@gmail.com";
 
 function generateEmailHTML(name: string, email: string, message: string) {
   const escapedMessage = message

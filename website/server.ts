@@ -1,7 +1,7 @@
 import index from "./index.html";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || "jose@ninthstreetdigital.com";
+const NOTIFY_EMAIL = process.env.NOTIFY_EMAIL || "felipesancheznoguera6@gmail.com";
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || "";
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || "";
 
